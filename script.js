@@ -80,6 +80,7 @@ async function newQuote()
 async function getayah()
 {
     
+    loading();
     verse = Math.floor(Math.random()* 6237)+1;
     const apiurl = 'http://api.alquran.cloud/ayah/'+verse+'/editions/quran-uthmani,en.pickthall'
 
