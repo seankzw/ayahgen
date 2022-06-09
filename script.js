@@ -15,7 +15,7 @@ let apiQuote = []
 
 
 function loading()
-{
+{ loading();
     loader.hidden = false;
     quoteContainer.hidden = true;
     
