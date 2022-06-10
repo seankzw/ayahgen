@@ -15,40 +15,40 @@ let apiQuote = []
 
 
 function loading()
-{ 
+{
     loader.hidden = false;
     quoteContainer.hidden = true;
-    
+
 }
 
 function complete()
 {
  quoteContainer.hidden = false;
- loader.hidden = true;   
+ loader.hidden = true;
 }
 
 async function newQuote()
 {
     loading();
     verse = Math.floor(Math.random()* 6237)+1;
-    const apiurl = 'http://api.alquran.cloud/ayah/'+verse+'/editions/quran-uthmani,en.pickthall'
+    const apiurl = 'https://api.alquran.cloud/ayah/'+verse+'/editions/quran-uthmani,en.pickthall'
 
     try {
-        const response = await fetch(apiurl) 
+        const response = await fetch(apiurl)
         apiQuote = await response.json();
         console.log(apiQuote);
 
     } catch (error) {
-        
+
         //catch error
-        
+
     }
 
     //check quote length to decide style
 
     arabic = apiQuote['data'][1]['text'];
     english = apiQuote['data'][0]['text'];
-    
+
 
 
     if(english.length > 50)
@@ -56,14 +56,14 @@ async function newQuote()
         quoteTextA.classList.add('long-quote');
         quoteTextE.classList.add('long-quote');
         console.log("long")
-    
+
     }else {
         quoteTextA.classList.remove('long-quote');
         quoteTextE.classList.remove ('long-quote');
     }
-   
 
-    
+
+
     quoteTextA.textContent = arabic
     quoteTextE.textContent = english
 
@@ -79,25 +79,25 @@ async function newQuote()
 //get ayah from api
 async function getayah()
 {
-    
+
     loading();
     verse = Math.floor(Math.random()* 6237)+1;
     const apiurl = 'http://api.alquran.cloud/ayah/'+verse+'/editions/quran-uthmani,en.pickthall'
 
     try {
-        const response = await fetch(apiurl) 
+        const response = await fetch(apiurl)
         apiQuote = await response.json();
         console.log(apiQuote);
 
     } catch (error) {
-        
+
         //catch error
-        
+
     }
-   
+
     arabic = apiQuote['data'][1]['text'];
     english = apiQuote['data'][0]['text'];
-    
+
 
 
     if(english.length>50)
@@ -105,14 +105,14 @@ async function getayah()
         quoteTextA.classList.add('long-quote');
         quoteTextE.classList.add('long-quote');
         console.log("long")
-    
+
     }else {
         quoteTextA.classList.remove('long-quote');
         quoteTextE.classList.remove ('long-quote');
     }
-   
 
-    
+
+
     quoteTextA.textContent = arabic
     quoteTextE.textContent = english
 
