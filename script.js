@@ -5,7 +5,9 @@ const ayahText = document.getElementById("ayah");
 const twitterBtn = document.getElementById("twitter");
 const newQuoteBtn = document.getElementById("new-quote");
 const loader = document.getElementById("loader");
-let url = new URL("https://ayahgen.vercel.app/");
+
+let prod = true;
+let url = new URL(prod ? "https://ayahgen.vercel.app/" : "http://127.0.0.1:5501/index.html"); //prod
 
 let apiQuote = [];
 
@@ -80,17 +82,14 @@ async function newQuote() {
 
 //get ayah from api
 async function getayah() {
-  console.log('v1.1')
+  console.log('v1.2')
   loading();
   //let verse = Math.floor(Math.random() * 6237) + 1;
   const query = window.location.search;
   const urlParams = new URLSearchParams(query);
-  let verse = 0;
-  if (urlParams.get("v") == null) {
-    verse = Math.floor(Math.random() * 6237) + 1;
-  } else {
-    verse = urlParams.get("v");
-  }
+  let verse = urlParams.get("v");
+    verse =  verse == null ? Math.floor(Math.random() * 6237) + 1 : verse;
+
   const apiurl =
     "https://api.alquran.cloud/ayah/" +
     verse +
@@ -132,16 +131,18 @@ async function getayah() {
     ":" +
     apiQuote["data"][0]["numberInSurah"];
 
-  url.searchParams.append("v", verse);
 
-  window.location.href = "hi";
+  url.searchParams.set("v", verse);
+  //window.location.href=url;
+
+  window.history.replaceState(null, null, `?${verse}`)
   console.log(url);
   complete();
 }
 
 function telegram() {
-  const teleurl = `https://t.me/share/url?url=${pageurl}&text=${message}`;
-  window.open(teleurl, "_blank");
+  //const teleurl = `https://t.me/share/url?url=${pageurl}&text=${message}`;
+  window.open("https://t.me/share/url?url=hi&text=bro", "_blank");
 }
 
 //Eventlistner
