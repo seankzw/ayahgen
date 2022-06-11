@@ -5,6 +5,7 @@ const ayahText = document.getElementById("ayah");
 const twitterBtn = document.getElementById("twitter");
 const newQuoteBtn = document.getElementById("new-quote");
 const loader = document.getElementById("loader");
+let url = new URL("https://ayahgen.vercel.app/");
 
 let apiQuote = [];
 
@@ -24,7 +25,15 @@ function complete() {
 
 async function newQuote() {
   loading();
-  verse = Math.floor(Math.random() * 6237) + 1;
+  const query = window.location.search;
+  const urlParams = new URLSearchParams(query);
+  let verse = 0;
+  if (urlParams.get("v") == null) {
+    verse = Math.floor(Math.random() * 6237) + 1;
+  } else {
+    verse = urlParams.get("v");
+  }
+
   const apiurl =
     "https://api.alquran.cloud/ayah/" +
     verse +
@@ -34,9 +43,9 @@ async function newQuote() {
     let time1 = performance.now();
     const response = await fetch(apiurl);
     apiQuote = await response.json();
-    let time2= performance.now();
-    console.log('newQuote() performance:')
-    console.log(time2-time1);
+    let time2 = performance.now();
+    console.log("newQuote() performance:");
+    console.log(time2 - time1);
     console.log(apiQuote);
   } catch (error) {
     //catch error
@@ -58,7 +67,7 @@ async function newQuote() {
 
   quoteTextA.textContent = arabic;
   quoteTextE.textContent = english;
-ayahText.textContent =
+  ayahText.textContent =
     apiQuote["data"][0]["surah"]["englishName"] +
     "(" +
     apiQuote["data"][0]["surah"]["number"] +
@@ -71,8 +80,17 @@ ayahText.textContent =
 
 //get ayah from api
 async function getayah() {
+  console.log('v1.1')
   loading();
-  let verse = Math.floor(Math.random() * 6237) + 1;
+  //let verse = Math.floor(Math.random() * 6237) + 1;
+  const query = window.location.search;
+  const urlParams = new URLSearchParams(query);
+  let verse = 0;
+  if (urlParams.get("v") == null) {
+    verse = Math.floor(Math.random() * 6237) + 1;
+  } else {
+    verse = urlParams.get("v");
+  }
   const apiurl =
     "https://api.alquran.cloud/ayah/" +
     verse +
@@ -84,8 +102,8 @@ async function getayah() {
     apiQuote = await response.json();
     let time2 = performance.now(); //! Time End
 
-    console.log("getAyah() performance :")
-    console.log(time2-time1) //! Time taken to execute
+    console.log("getAyah() performance :");
+    console.log(time2 - time1); //! Time taken to execute
     console.log(apiQuote);
   } catch (error) {
     //catch error
@@ -114,6 +132,10 @@ async function getayah() {
     ":" +
     apiQuote["data"][0]["numberInSurah"];
 
+  url.searchParams.append("v", verse);
+
+  window.location.href = "hi";
+  console.log(url);
   complete();
 }
 
